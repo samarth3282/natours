@@ -1,0 +1,25 @@
+{
+  "name": "natours",
+  "version": "1.0.0",
+  "description": "Learning node, express and mongodb",
+  "license": "ISC",
+  "author": "Samarth Patel",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "debug": "ndb server.js",
+    "start:prod": "cross-env NODE_ENV=production nodemon server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.0",
+    "express": "^4.21.2",
+    "mongoose": "^5.13.23",
+    "morgan": "^1.10.1",
+    "slugify": "^1.6.6"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
