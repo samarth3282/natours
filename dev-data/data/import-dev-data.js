@@ -1,57 +1,52 @@
+const fs = require('fs');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const fs = require('fs');
 const Tour = require('./../../models/tourModel');
-const { log } = require('console');
-// Load environment variables
+
 dotenv.config({ path: './config.env' });
 
-// Replace <PASSWORD> in connection string
 const DB = process.env.DATABASE.replace(
-    '<PASSWORD>',
-    process.env.DATABASE_PASSWORD
+  '<PASSWORD>',
+  process.env.DATABASE_PASSWORD
 );
 
-// Connect to MongoDB Atlas
 mongoose
-    .connect(DB, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,        // ✅ Optional in latest Mongoose (may show warning in future)
-        useFindAndModify: false      // ✅ Optional in latest Mongoose (may show warning in future)
-    })
-    .then(() => console.log('DB CONNECTION SUCCESSFUL'))
-    .catch(err => {
-        console.error('DB CONNECTION FAILED ❌', err);
-    });
+  .connect(DB, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: false
+  })
+  .then(() => console.log('DB connection successful!'));
 
-const tours = JSON.parse(fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8'));
+// READ JSON FILE
+const tours = JSON.parse(
+  fs.readFileSync(`${__dirname}/tours-simple.json`, 'utf-8')
+);
 
+// IMPORT DATA INTO DB
 const importData = async () => {
-    try {
-        await Tour.create(tours);
-        console.log('Data successfully loaded');
-        process.exit();
+  try {
+    await Tour.create(tours);
+    console.log('Data successfully loaded!');
+  } catch (err) {
+    console.log(err);
+  }
+  process.exit();
+};
 
-    } catch (err) {
-        console.log(err);
-
-    }
-}
-
+// DELETE ALL DATA FROM DB
 const deleteData = async () => {
-    try {
-        await Tour.deleteMany();
-        console.log('Data successfully deleted');
-        process.exit();
-    } catch (err) {
-        console.log(err);
-    }
-}
+  try {
+    await Tour.deleteMany();
+    console.log('Data successfully deleted!');
+  } catch (err) {
+    console.log(err);
+  }
+  process.exit();
+};
+
 if (process.argv[2] === '--import') {
-    importData();
+  importData();
+} else if (process.argv[2] === '--delete') {
+  deleteData();
 }
-else if (process.argv[2] === '--delete') {
-    deleteData();
-}
-console.log(process.argv);
