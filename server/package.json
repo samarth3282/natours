@@ -10,10 +10,6 @@
     "debug": "ndb server.js",
     "build": "echo 'No build step required for Node.js server'"
   },
-  "engines": {
-    "node": "^16",
-    "npm": "^8"
-  },
   "author": "Arun Bohra",
   "license": "ISC",
   "dependencies": {
@@ -35,7 +31,7 @@
     "nodemailer": "^6.7.7",
     "pug": "^3.0.2",
     "razorpay": "^2.9.6",
-    "sharp": "^0.31.1",
+    "sharp": "^0.35.3",
     "slugify": "^1.6.5",
     "stripe": "^10.12.0",
     "validator": "^13.7.0",
