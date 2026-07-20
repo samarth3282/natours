@@ -43,9 +43,10 @@ if (!process.env.DATABASE || !process.env.DATABASE_PASSWORD) {
 // Elastic Beanstalk AL2023 Nginx proxies to 8080 by default. 
 // We will listen on BOTH 8080 and 3000 to absolutely guarantee Nginx can reach the app, 
 // regardless of whether the user set NODE_ENV=production or PORT=3000 manually!
-app.listen(8080, () => {
+// We MUST explicitly bind to 0.0.0.0 because Node 24 might default to IPv6 (::) which breaks Nginx proxying to 127.0.0.1!
+app.listen(8080, '0.0.0.0', () => {
     console.log(`App running on port 8080 (For Elastic Beanstalk)...`);
 });
-app.listen(3000, () => {
+app.listen(3000, '0.0.0.0', () => {
     console.log(`App running on port 3000 (For Local Development)...`);
 });
