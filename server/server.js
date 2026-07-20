@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+process.on('uncaughtException', err => {
+    console.error('UNCAUGHT EXCEPTION! 💥');
+    console.error(err.name, err.message, err.stack);
+});
+
+process.on('unhandledRejection', err => {
+    console.error('UNHANDLED REJECTION! 💥');
+    console.error(err.name, err.message, err.stack);
+});
+
 dotenv.config({ path: './config.env' });
 const app = require('./app');
 
@@ -31,8 +41,8 @@ if (!process.env.DATABASE || !process.env.DATABASE_PASSWORD) {
 }
 
 // Elastic Beanstalk AL2023 Nginx proxies to 8080 by default. 
-// If process.env.PORT is not passed, we MUST fallback to 8080 in production!
-const port = process.env.PORT || (process.env.NODE_ENV === 'production' ? 8080 : 3000);
+// We MUST ignore process.env.PORT if the user accidentally set it to 3000 in the EB console!
+const port = process.env.NODE_ENV === 'production' ? 8080 : (process.env.PORT || 3000);
 const server = app.listen(port, () => {
     console.log(`App running on port ${port}...`);
 });
