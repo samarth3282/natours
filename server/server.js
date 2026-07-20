@@ -30,7 +30,9 @@ if (!process.env.DATABASE || !process.env.DATABASE_PASSWORD) {
         });
 }
 
-const port = process.env.PORT || 3000;
+// Elastic Beanstalk AL2023 Nginx proxies to 8080 by default. 
+// If process.env.PORT is not passed, we MUST fallback to 8080 in production!
+const port = process.env.PORT || (process.env.NODE_ENV === 'production' ? 8080 : 3000);
 const server = app.listen(port, () => {
     console.log(`App running on port ${port}...`);
 });
