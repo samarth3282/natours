@@ -140,6 +140,11 @@ app.use(compression());
 // ----------------------------------------------------
 // Routes
 
+// Health check route for Elastic Beanstalk
+app.get('/', (req, res) => {
+  res.status(200).send('API is running...');
+});
+
 // API Routes
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
