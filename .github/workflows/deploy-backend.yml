@@ -46,7 +46,7 @@ jobs:
             # Run the new container
             docker run -d \
               --name natours-backend \
-              -p 8080:3000 \
+              -p 80:3000 \
               -e NODE_ENV=production \
               -e AWS_REGION=us-east-1 \
               -e SECRET_NAME=natours-backend-secrets \
