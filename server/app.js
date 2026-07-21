@@ -39,6 +39,7 @@ app.use(
 
 // Configure CORS to allow frontend domain
 const allowedOrigins = [
+  'https://natours.samarth-patel.dev',
   'https://natours-frontend-rhey.onrender.com',
   'http://localhost:5173', // for local development (Vite)
   'http://localhost:3000', // for local development
